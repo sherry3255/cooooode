@@ -1,6 +1,6 @@
 # 算法模板
 
-'''
+```
     vector<vector<int> > twoSum(vector<int>& nums,int target){
         sort(nums.begin(),nums.end());
         vector<vector<int>> res;
@@ -23,6 +23,6 @@
         }
         return res;
     }
-'''
+```
 
 sort排序的复杂度为O(NlogN),2sum问题双指针操作时间复杂度为O(N)。
