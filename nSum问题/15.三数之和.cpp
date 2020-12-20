@@ -47,3 +47,7 @@ public:
 };
 // @lc code=end
 
+/*3Sum 问题就解决了，时间复杂度不难算，排序的复杂度为 O(NlogN).
+twoSumTarget 函数中的双指针操作为 O(N)，
+threeSumTarget 函数在 for 循环中调用 twoSumTarget 所以总的时间复杂度就是 O(NlogN + N^2) = O(N^2)。*/
+
