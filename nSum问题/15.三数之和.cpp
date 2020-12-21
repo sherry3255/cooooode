@@ -9,7 +9,7 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int> > twoSum(vector<int>& nums,int start,int target){
-        sort(nums.begin(),nums.end());
+        //sort(nums.begin(),nums.end());
         vector<vector<int>> res;
         int lo = start;
         int hi = nums.size()-1;
