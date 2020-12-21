@@ -35,21 +35,48 @@
  */
 
 // @lc code=start
+#include <vector>
+#include <stdio.h>
+#include <algorithm>
+using namespace std;
 class Solution {
 public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
         sort(nums.begin(),nums.end());
         vector<vector<int>> res;
-        int 
+        res = nSumTarget(nums,4,0,target);
+        return res;
     }
-    vector<vector<int>> threeSum(vector<int>& nums,int start,int target){
-
-    }
-    vector<vector<int>> twoSum(vector<int>& nums,int start,int target){
-        sort(nums.begin(),nums.end());
+    vector<vector<int>> nSumTarget(vector<int>& nums,int n,int start,int target){
         vector<vector<int>> res;
-        int lo = start;
-        int hi = nums.size()-1;
+        int sz = nums.size();
+        if(n<2||sz<n) return res;
+        else if(n==2){
+            int lo = start,hi = sz-1;            
+            while(lo<hi){
+                int sum = nums[lo]+nums[hi];
+                int left = lo,right = hi;
+                if(sum<target){
+                    while(lo<hi&&nums[lo]==nums[lo+1]) lo++;
+                }else if(sum>target){
+                    while(lo<hi&&nums[hi]==nums[hi-1]) hi--;
+                }else{
+                    res.push_back({left,right});
+                    while(lo<hi&&nums[lo]==nums[lo+1]) lo++;
+                    while(lo<hi&&nums[hi]==nums[hi-1]) hi--;
+                }
+            }
+        }else{
+            for(int i=0;i<sz;i++){
+                vector<vector<int>> sumSums = nSumTarget(nums,n-1,i+1,target-nums[i]); 
+                for(vector<int> sumSum:sumSums){
+                    sumSum.push_back(nums[i]);
+                    res.push_back(sumSum);
+                }   
+                while(i<sz&&nums[i]==nums[i+1]) i++;            
+            }
+        }
+        return res;       
     }
 };
 // @lc code=end
