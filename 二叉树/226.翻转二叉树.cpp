@@ -2,6 +2,7 @@
  * @lc app=leetcode.cn id=226 lang=cpp
  *
  * [226] 翻转二叉树
+<<<<<<< HEAD
  *
  * https://leetcode-cn.com/problems/invert-binary-tree/description/
  *
@@ -38,6 +39,8 @@
  * 
  * 谷歌：我们90％的工程师使用您编写的软件(Homebrew)，但是您却无法在面试时在白板上写出翻转二叉树这道题，这太糟糕了。
  * 
+=======
+>>>>>>> 965c44acd5ac6caefdd33c23f9945ed2e43e9610
  */
 
 // @lc code=start
