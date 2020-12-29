@@ -48,11 +48,42 @@
  */
 
 // @lc code=start
+#include <vector>
+#include <string>
+#include <hash_map>
+using namespace std;
+
 class Solution {
 public:
     int findTargetSumWays(vector<int>& nums, int S) {
+        if (nums.size() == 0) return 0;
+        return dp(nums, 0, S);
+    }
 
+    hash_map<string,int> memo;
+    int dp(vector<int>& nums, int i, int rest) {
+        // base case
+        if (i == nums.size()) {
+            if (rest == 0) return 1;
+            return 0;
+        }
+        // 把它俩转成字符串才能作为哈希表的键
+        string key = i + "," + rest;
+        // 避免重复计算
+        if (memo.containsKey(key)) {
+            return memo.get(key);
+        }
+        // 还是穷举
+        int result = dp(nums, i + 1, rest - nums[i]) + dp(nums, i + 1, rest + nums[i]);
+        // 记入备忘录
+        memo.put(key, result);
+        return result;
     }
 };
+
+
+
+// 备忘录
+
 // @lc code=end
 

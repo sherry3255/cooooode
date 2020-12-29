@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "vector": "cpp"
+        "vector": "cpp",
+        "tuple": "cpp",
+        "system_error": "cpp"
     }
 }
