@@ -48,6 +48,7 @@
  */
 
 // @lc code=start
+// 提交超时
 #include <map>
 #include <vector>
 #include <string>
@@ -56,42 +57,28 @@ using namespace std;
 
 class Solution {
 public:
-    int findTargetSumWays(vector<int>& nums, int target) {
-        int sum = 0;
-        for (int n : nums) sum += n;
-        // 这两种情况，不可能存在合法的子集划分
-        if (sum < target || (sum + target) % 2 == 1) {
+    int findTargetSumWays(vector<int>& nums, int S) {
+        if (nums.size() == 0) return 0;
+        return dp(nums, 0, S);
+    }
+
+    map<string,int> memo;
+    int dp(vector<int>& nums, int i, int rest) {
+        // base case
+        if (i == nums.size()) {
+            if (rest == 0) return 1;
             return 0;
         }
-        return subsets(nums, (sum + target) / 2);
-    }
-
-    int subsets(vector<int>& nums, int sum) {
-        int n = nums.size();
-        vector<vector<int>> dp(n+1,vector(sum+1,0));
-        // base case
-        for (int i = 0; i <= n; i++) {
-            dp[i][0] = 1;
+        // 把它俩转成字符串才能作为哈希表的键
+        string key = i + "," + rest;
+        // 避免重复计算
+        if (memo.find(key)!=memo.end()) {
+            return memo[key];
         }
-
-        for (int i = 1; i <= n; i++) {
-            for (int j = 0; j <= sum; j++) {
-                if (j >= nums[i-1]) {
-                    // 两种选择的结果之和
-                    dp[i][j] = dp[i-1][j] + dp[i-1][j-nums[i-1]];
-                } else {
-                    // 背包的空间不足，只能选择不装物品 i
-                    dp[i][j] = dp[i-1][j];
-                }
-            }
-        }
-        return dp[n][sum];
+        // 还是穷举
+        int result = dp(nums, i + 1, rest - nums[i]) + dp(nums, i + 1, rest + nums[i]);
+        // 记入备忘录
+        memo[key] =  result;
+        return result;
     }
 };
-
-
-
-// 备忘录
-
-// @lc code=end
-
