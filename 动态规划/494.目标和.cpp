@@ -48,9 +48,10 @@
  */
 
 // @lc code=start
+#include <map>
 #include <vector>
 #include <string>
-#include <hash_map>
+
 using namespace std;
 
 class Solution {
@@ -60,7 +61,7 @@ public:
         return dp(nums, 0, S);
     }
 
-    hash_map<string,int> memo;
+    map<string,int> memo;
     int dp(vector<int>& nums, int i, int rest) {
         // base case
         if (i == nums.size()) {
@@ -70,13 +71,13 @@ public:
         // 把它俩转成字符串才能作为哈希表的键
         string key = i + "," + rest;
         // 避免重复计算
-        if (memo.containsKey(key)) {
-            return memo.get(key);
+        if (memo.find(key)!=memo.end()) {
+            return memo[key];
         }
         // 还是穷举
         int result = dp(nums, i + 1, rest - nums[i]) + dp(nums, i + 1, rest + nums[i]);
         // 记入备忘录
-        memo.put(key, result);
+        memo[key] =  result;
         return result;
     }
 };
