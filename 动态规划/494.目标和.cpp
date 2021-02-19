@@ -50,8 +50,15 @@
 using namespace std;
 
 // @lc code=start
+#include <map>
+#include <vector>
+#include <string>
+
+using namespace std;
+
 class Solution {
 public:
+<<<<<<< HEAD
     int result = 0;
     int findTargetSumWays(vector<int>& nums, int S) {
         
@@ -74,8 +81,44 @@ public:
         rest-=nums[i];
         backtrace(nums,i+1,rest);
         rest+=nums[i];
+=======
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int sum = 0;
+        for (int n : nums) sum += n;
+        // 这两种情况，不可能存在合法的子集划分
+        if (sum < target || (sum + target) % 2 == 1) {
+            return 0;
+        }
+        return subsets(nums, (sum + target) / 2);
+    }
 
+    int subsets(vector<int>& nums, int sum) {
+        int n = nums.size();
+        vector<vector<int>> dp(n+1,vector(sum+1,0));
+        // base case
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = 1;
+        }
+>>>>>>> 3029aadfc1a0f850e1dec101f16b076f606d9dce
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= sum; j++) {
+                if (j >= nums[i-1]) {
+                    // 两种选择的结果之和
+                    dp[i][j] = dp[i-1][j] + dp[i-1][j-nums[i-1]];
+                } else {
+                    // 背包的空间不足，只能选择不装物品 i
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][sum];
     }
 };
+
+
+
+// 备忘录
+
 // @lc code=end
 
