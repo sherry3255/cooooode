@@ -45,7 +45,7 @@
  * 保证返回的最终结果能被 32 位整数存下。
  * 
  * 
- */a
+ */
 #include <vector>
 using namespace std;
 

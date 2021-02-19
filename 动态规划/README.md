@@ -23,6 +23,17 @@
 - 选择变量遍历的顺序需记住两点：
     - 遍历的过程中，所需的状态必须是已经计算出来的。
     - 遍历的终点必须是存储结果的那个位置。
+- 如何看出重叠子问题：
+    - 举例为：
+    ```
+先抽象出递归框架：
+
+void backtrack(int i, int rest) {
+    backtrack(i + 1, rest - nums[i]);
+    backtrack(i + 1, rest + nums[i]);
+}
+```
+然后可以看出，nums[i]=0时，backtrack就会为重叠子问题。
 
 ```
 # 初始化 base case

@@ -1,3 +1,6 @@
+#include <vector>
+using namespace std;
+
 // 动态规划解法
 int fib(int N) {
     if (N < 1) return 0;
