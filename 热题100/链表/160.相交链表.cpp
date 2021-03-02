@@ -82,11 +82,17 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-class Solution {
-public:
+class Solution { 
+public: 
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        
-    }
-};
+         ListNode *a = headA, *b = headB; 
+         while(a != b) { 
+             a = a==NULL? headB:a->next; 
+             //为NULL时，将值置为另一个链表的起点 
+             b = b==NULL? headA:b->next;  
+        } 
+        return a; 
+    } 
+}; 
 // @lc code=end
 
