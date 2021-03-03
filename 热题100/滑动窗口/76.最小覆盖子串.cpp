@@ -50,6 +50,12 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
+        unordered_map<char, int> map;
+        for(auto c : t) map[c]++;
+        int left =0,cnt = 0,maxlen = s.size()+1,start = left;
+        for(int i=0;i<s.size();i++){
+            if(--map[s[i]]>0) ++cnt
+        }
 
     }
 };
