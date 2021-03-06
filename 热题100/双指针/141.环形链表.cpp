@@ -79,8 +79,19 @@
  */
 class Solution {
 public:
+// 快慢指针相遇
     bool hasCycle(ListNode *head) {
-        
+        if(head == nullptr || head->next == nullptr) return false;
+        ListNode* slow = head;
+        ListNode* fast = head -> next;
+        while(fast!= slow){
+            if(fast == nullptr||fast -> next == nullptr){
+                return false;
+            }
+            slow = slow -> next;
+            fast = fast -> next -> next;
+        }
+        return true;
     }
 };
 // @lc code=end

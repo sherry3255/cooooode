@@ -50,8 +50,26 @@
 class Solution {
 public:
     int trap(vector<int>& height) {
-
+        int left = 0,right = height.size()-1;
+        int ans = 0;
+        int l_max = 0, r_max = 0;
+        while(left < right){
+            if(height[left] < height[right]){
+                height[left] >= l_max ? (l_max = height[left]) : ans += (l_max - height[left]);
+                left ++; 
+            }else{
+                height[right] >= r_max ? (r_max = height[right]) : ans += (r_max - height[right]);
+                right --;
+            }
+        }
+        return ans;
     }
 };
+/*
+
+时间复杂度：O(n)。单次遍历的时间O(n)。
+空间复杂度：O(1) 的额外空间。left, right, left_max 和 right_maxright_max 只需要常数的空间。
+
+*/
 // @lc code=end
 

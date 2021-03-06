@@ -50,13 +50,43 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        unordered_map<char, int> map;
-        for(auto c : t) map[c]++;
-        int left =0,cnt = 0,maxlen = s.size()+1,start = left;
-        for(int i=0;i<s.size();i++){
-            if(--map[s[i]]>0) ++cnt
-        }
+        // need为需要的字符，window为窗口内的字符
+        unordered_map<char, int> need, window;
+        for(auto c : t) need[c]++;
+        int left =0,right = 0;
+        // valid为判断窗口内的字符是否满足t需要的字符，并记录最小覆盖子串的初始长度及索引
+        int valid = 0,maxlen = s.size()+1,start = left;
+        while(right < s.size()){
+            // 要移入窗口的字符
+            char c = s[right];
+            // 右移窗口
+            right ++;
+            // 需要字符串c，更新valid判断
+            if (need.count(c)){
+                window[c]++;
+                if(window[c]==need[c]){
+                    valid ++;
+                }
+            }
 
+            // 判断左侧窗口是否收缩
+            // 当窗口中满足所有的t字符要求，即收缩左侧窗口
+            while(valid == need.size()){
+                if(right - left < maxlen){
+                    start = left;
+                    maxlen = right - left;
+                }
+                char d = s[left];
+                left ++;
+                if(need.count(d)){
+                    if(window[d] == need[d]){
+                        valid--;
+                    }
+                    window[d]--;
+                }
+            }
+        }
+        return maxlen == s.size()+1?"":s.substr(start,maxlen);
     }
 };
 // @lc code=end

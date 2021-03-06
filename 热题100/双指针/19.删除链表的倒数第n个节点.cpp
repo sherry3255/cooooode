@@ -67,8 +67,21 @@
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-
+        ListNode* fast = head;
+        ListNode* slow = head;
+        while(n--){
+            fast = fast->next;
+        }
+        if(fast == nullptr){
+            return head->next;
+        }
+        while(fast != nullptr && fast->next != nullptr){
+            fast = fast->next;
+            slow = slow->next;
+        }
+        // 删除的是slow的下一个元素，当fast == nullptr时，slow开始执行
+        slow->next = slow->next->next;
+        return head;
     }
 };
 // @lc code=end
-

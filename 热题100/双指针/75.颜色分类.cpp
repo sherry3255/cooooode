@@ -74,9 +74,48 @@
 // @lc code=start
 class Solution {
 public:
+// 单指针的方法
     void sortColors(vector<int>& nums) {
-
+        int n = nums.size();
+        int ptr = 0;
+        for(int i = 0;i < n;i++){
+            if(nums[i]==0){
+                swap(nums[i],nums[ptr]);
+                ptr++;
+            }
+        }
+        for(int i = ptr; i<n; i++){
+            if(nums[i]==1){
+                swap(nums[i], nums[ptr]);
+                ptr++;
+            }
+        }
     }
 };
+
+// 双指针的方法
+/*
+void sortColors(vector<int>& nums){
+    int n = nums.size();
+    int p0 = 0, p2 = n-1;
+    for(int i = 0;i < p2;i++){
+        while(i<=p2 && nums[i] == 2){
+            swap(nums[i], nums[p2]);
+            p2--;
+        }
+        if(nums[i] = 0){
+            swap(nums[i], nums[p0]);
+            p0++;
+        }
+    }
+}
+
+间复杂度：O(n)，其中 n 是数组 nums 的长度。
+空间复杂度：O(1)。
+
+*/
 // @lc code=end
 
+{
+
+}
