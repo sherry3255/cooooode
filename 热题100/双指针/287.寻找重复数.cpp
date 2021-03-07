@@ -74,9 +74,25 @@
 // @lc code=start
 class Solution {
 public:
-    int findDuplicate(vector<int>& nums) {
+    // 对 nums 数组建图，每个位置 i 连一条 i→nums[i]的边,由于存在的重复的数字 target，因此 target 这个位置一定有起码两条指向它的边，因此整张图一定存在环.
 
+    int findDuplicate(vector<int>& nums) {
+        int slow = 0,fast = 0;
+        do{
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }while(slow!=fast);
+        slow = 0;
+        while(slow!=fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
     }
 };
+/*
+时间复杂度：O(n)。「Floyd 判圈算法」时间复杂度为线性的时间复杂度。
+空间复杂度：O(1)。我们只需要常数空间存放若干变量。
+*/
 // @lc code=end
 

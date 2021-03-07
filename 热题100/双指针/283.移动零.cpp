@@ -32,8 +32,21 @@
 // @lc code=start
 class Solution {
 public:
+// 覆盖补零
     void moveZeroes(vector<int>& nums) {
-        
+        int n = nums.size();
+        int (n == 0) return;
+        int i = 0,cur = 0;
+        while(i < n){
+            if(nums[i]!=0){
+                nums[cur] = nums[i];
+                cur++;
+            }
+            i++;
+        }while(cur < n){
+            nums[cur] = 0;
+            cur++;
+        }
     }
 };
 // @lc code=end
