@@ -51,6 +51,26 @@
 class Solution {
 public:
     int minPathSum(vector<vector<int>>& grid) {
+        if(grid.size() == 0 || grid[0].size() == 0){
+            return 0;
+        }
+        int r = grid.size();
+        int c = grid[0].size();
+        // vector<vector<int>> dp(r, vector<int>(c));
+        // 可使用grid[i][j]直接覆盖，因为每次grid[i][j]也只被访问一次即可
+        // dp[0][0] = grid[0][0];
+        for(int i = 0;i<r;i++){
+            grid[i][0] = grid[i- 1][0] + grid[i][0];
+        }
+        for(int j = 0;j<c;j++){
+            grid[0][j] = grid[0][j-1] + grid[0][j];
+        }
+        for(int i = 1;i<r;i++){
+            for(int j =1;j<c;j++){
+                grid[i][j] = min(grid[i][j-1],grid[i-1][j]) + grid[i][j];
+            }
+        }
+        return grid[r-1][c-1];
 
     }
 };

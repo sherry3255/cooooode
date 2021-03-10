@@ -43,7 +43,14 @@
 class Solution {
 public:
     int climbStairs(int n) {
-
+        int once = 0,twice = 0,cur = 1;
+        for(int i = 1;i<=n;i++){
+            once = twice;
+            twice = cur;
+            cur = once+twice;
+            // f[n] = f[n-1] + f[n-2];
+        }
+        return cur;
     }
 };
 // @lc code=end

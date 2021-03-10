@@ -79,7 +79,10 @@
 class Solution {
 public:
     bool isMatch(string s, string p) {
+        int m = s.size();
+        int n = p.size();
 
+        auto 
     }
 };
 // @lc code=end
