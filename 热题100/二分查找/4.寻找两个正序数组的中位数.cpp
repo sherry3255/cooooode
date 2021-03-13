@@ -73,12 +73,12 @@
 
     不需要合并两个有序数组，只要找到中位数的位置即可。由于两个数组的长度已知，因此中位数对应的两个数组的下标之和也是已知的。维护两个指针，初始时分别指向两个数组的下标 000 的位置，每次将指向较小值的指针后移一位（如果一个指针已经到达数组末尾，则只需要移动另一个数组的指针），直到到达中位数的位置。
 
-第一种思路的时间复杂度是 O(m+n)O(m+n)O(m+n)，空间复杂度是 O(m+n)O(m+n)O(m+n)。第二种思路虽然可以将空间复杂度降到 O(1)O(1)O(1)，但是时间复杂度仍是 O(m+n)O(m+n)O(m+n)。
+第一种思路的时间复杂度是 O(m+n)，空间复杂度是 O(m+n)。第二种思路虽然可以将空间复杂度降到 O(1)，但是时间复杂度仍是 O(m+n)。
 
 如何把时间复杂度降低到 O(log⁡(m+n))呢？如果对时间复杂度的要求有 log，通常都需要用到二分查找，这道题也可以通过二分查找实现。
 
-根据中位数的定义，当 m+nm+nm+n 是奇数时，中位数是两个有序数组中的第 (m+n)/2(m+n)/2(m+n)/2 个元素，当 m+nm+nm+n 是偶数时，中位数是两个有序数组中的第 (m+n)/2(m+n)/2(m+n)/2 个元素和第 (m+n)/2+1(m+n)/2+1(m+n)/2+1 个元素的平均值。因此，这道题可以转化成寻找两个有序数组中的第 kkk 小的数，其中 kkk 为 (m+n)/2(m+n)/2(m+n)/2 或 (m+n)/2+1(m+n)/2+1(m+n)/2+1。
-第一种思路的时间复杂度是 O(m+n)O(m+n)O(m+n)，空间复杂度是 O(m+n)O(m+n)O(m+n)。第二种思路虽然可以将空间复杂度降到 O(1)O(1)O(1)，但是时间复杂度仍是 O(m+n)O(m+n)O(m+n)。
+根据中位数的定义，当 m+n是奇数时，中位数是两个有序数组中的第 (m+n)/2 个元素，当 m+n 是偶数时，中位数是两个有序数组中的第 (m+n)/2 个元素和第 (m+n)/2+1 个元素的平均值。因此，这道题可以转化成寻找两个有序数组中的第 k 小的数，其中 k 为 (m+n)/2 或 (m+n)/2+1。
+第一种思路的时间复杂度是 O(m+n)，空间复杂度是 O(m+n)。第二种思路虽然可以将空间复杂度降到 O(1)，但是时间复杂度仍是 O(m+n)。
 
 如何把时间复杂度降低到 O(log⁡(m+n)) 呢？如果对时间复杂度的要求有 log，通常都需要用到二分查找，这道题也可以通过二分查找实现。
 
@@ -91,9 +91,62 @@
 // @lc code=start
 class Solution {
 public:
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+// https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/xun-zhao-liang-ge-you-xu-shu-zu-de-zhong-wei-s-114/
 
+    /* 主要思路：要找到第 k (k>1) 小的元素，那么就取 pivot1 = nums1[k/2-1] 和 pivot2 = nums2[k/2-1] 进行比较
+    * 这里的 "/" 表示整除
+    * nums1 中小于等于 pivot1 的元素有 nums1[0 .. k/2-2] 共计 k/2-1 个
+    * nums2 中小于等于 pivot2 的元素有 nums2[0 .. k/2-2] 共计 k/2-1 个
+    * 取 pivot = min(pivot1, pivot2)，两个数组中小于等于 pivot 的元素共计不会超过 (k/2-1) + (k/2-1) <= k-2 个
+    * 这样 pivot 本身最大也只能是第 k-1 小的元素
+    * 如果 pivot = pivot1，那么 nums1[0 .. k/2-1] 都不可能是第 k 小的元素。把这些元素全部 "删除"，剩下的作为新的 nums1 数组
+    * 如果 pivot = pivot2，那么 nums2[0 .. k/2-1] 都不可能是第 k 小的元素。把这些元素全部 "删除"，剩下的作为新的 nums2 数组
+    * 由于我们 "删除" 了一些元素（这些元素都比第 k 小的元素要小），因此需要修改 k 的值，减去删除的数的个数
+    */
+    int getkthelement(vector<int>& nums1, vector<int>& nums2,int k)
+    {
+        int m=nums1.size();
+        int n=nums2.size();
+        int index1=0;
+        int index2=0;
+        while(1)
+        {
+            if(index1==m)
+            {
+                return nums2[index2+k-1]; // 取倒数nums2倒数第k个数
+            }
+            if(index2==n)
+            {
+                return nums1[index1+k-1];
+            }
+            if(k==1)
+            {
+                return min(nums1[index1],nums2[index2]);
+            }
+
+            int newindex1=min(index1+k/2-1,m-1); //保证新的下标不会越界
+            int newindex2=min(index2+k/2-1,n-1);
+            if(nums1[newindex1]<=nums2[newindex2])
+            {
+                k -= newindex1 - index1 + 1; // 减去删除的数的个数
+                index1=newindex1+1;// 取新的开头
+            }
+            else
+            {
+                k -= newindex2 - index2 + 1;
+                index2=newindex2+1;
+            }
+        }
+    }
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int len=nums1.size()+nums2.size();
+        if(len%2==1)
+            return getkthelement(nums1,nums2,(len+1)/2);
+        else
+            return (getkthelement(nums1,nums2,len/2)+getkthelement(nums1,nums2,len/2+1))/2.0;
     }
 };
+
+
 // @lc code=end
 

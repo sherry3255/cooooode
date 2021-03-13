@@ -52,8 +52,18 @@
 // @lc code=start
 class Solution {
 public:
+// 只考虑最低的这天买入的情况
     int maxProfit(vector<int>& prices) {
-
+        int minPrice = le9;
+        int maxProfit = 0;
+        for(int i = 0;i < prices.size();i++){
+            if(prices[i]<minProfit){
+                minPrice = prices[i];
+            }else if(prices[i] - minPrice > maxProfit){
+                maxProfit = prices[i] - minPrice;
+            }
+        }
+        return maxProfit;
     }
 };
 // @lc code=end

@@ -19,7 +19,7 @@
  * 
  * 
  * 每个数组中的元素不会超过 100
- * 数组的大小不会超过 200
+ * 数组的大小不会超过 200l
  * 
  * 
  * 示例 1:
@@ -50,7 +50,28 @@
 class Solution {
 public:
     bool canPartition(vector<int>& nums) {
-
+        int n = nums.size();
+        if(n<2) return false;
+        int sum = accumulate(nums.begin(),nums.end(),0);
+        int maxNum = *max_element(nums.begin(),nums.end());
+        if(sum % 2) return false;
+        int target = sum/2;
+        if(maxNum > target) return false;
+        vector<vector<int>> dp(n,vector<int>(target+1,0));
+        for(int i=0;i<n;i++){
+            dp[i][0] = true;
+        }
+        dp[0][nums[0]] = true;
+        for(int i=1; i<n;i++){
+            for(int j=1;j<=target;j++){
+                if(j>= nums[i]){
+                    dp[i][j] = dp[i-1][j] | dp[i-1][j - nums[i]];
+                }else{
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        return dp[n-1][target];
     }
 };
 // @lc code=end

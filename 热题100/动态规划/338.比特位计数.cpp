@@ -39,8 +39,17 @@
 class Solution {
 public:
     vector<int> countBits(int num) {
-
+        vector<int> bits(num+1);
+        int highbit = 0;
+        for(int i=1;i<=num;i++){
+            if((i&(i-1)) == 0){
+                highbit = i;
+            }
+            bits[i] = bits[i - highbit] + 1;
+        }
+        return bits;
     }
 };
+// 时间复杂度为计算 bits的时间，O(n);空间复杂度为o(n),nums的长度。
 // @lc code=end
 

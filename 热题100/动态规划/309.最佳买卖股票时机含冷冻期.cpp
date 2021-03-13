@@ -34,8 +34,44 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
+        if(prices.size() == 0) return 0;
+        int n = prices.size();
+         // f[i][0]: 手上持有股票的最大收益 
+         // f[i][1]: 手上不持有股票，并且处于冷冻期中的累计最大收益 
+         // f[i][2]: 手上不持有股票，并且不在冷冻期中的累计最大收益
+        vector<vector<int>> dp(n,vector<int>(3));
+        dp[0][0] = -prices[0];
+        dp[0][1] = 0;
+        dp[0][2] = 0;
+        /*
+        f0 = -prices[0];
+        f1 = 0;
+        f2 = 0;
+        
+        */
+        for(int i = 1;i<n;i++){
+            dp[i][0] = max(dp[i-1][0],dp[i-1][2] - prices[i]); //当天买入
+            dp[i][1] = dp[i-1][0]+prices[i]; //当天卖出
+            dp[i][2] = max(dp[i-1][1],dp[i-1][2]);
+        }
+        return max(dp[n-1][1],dp[n-1][2]);
 
+/*
+        for(int i = 1;i<n;i++){
+            int newf0 = max(f0,f2 - prices[i]); //当天买入
+            int newf1 = f0+prices[i]; //当天卖出
+            int newf2 = max(f1,f2);
+            f0 = newf0;
+            f1 = newf1;
+            f2 = newf2;
+        }
+        return max(f1,f2);
+
+*/
     }
 };
+/*
+时间复杂度：O(n)，其中 n 为数组 prices 的长度。
+空间复杂度：O(n)。我们需要 3n 的空间存储动态规划中的所有状态，对应的空间复杂度为 O(n)。如果使用空间优化，空间复杂度可以优化至 O(1)。
+*/
 // @lc code=end
-

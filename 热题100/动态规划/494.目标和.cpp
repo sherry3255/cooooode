@@ -50,9 +50,37 @@
 // @lc code=start
 class Solution {
 public:
-    int findTargetSumWays(vector<int>& nums, int S) {
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int sum = 0;
+        for (int n : nums) sum += n;
+        // 这两种情况，不可能存在合法的子集划分
+        if (sum < target || (sum + target) % 2 == 1) {
+            return 0;
+        }
+        return subsets(nums, (sum + target) / 2);
+    }
 
+    int subsets(vector<int>& nums, int sum) {
+        int n = nums.size();
+        vector<vector<int>> dp(n+1,vector(sum+1,0));
+        // base case
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = 1;
+        }
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= sum; j++) {
+                if (j >= nums[i-1]) {
+                    // 两种选择的结果之和
+                    dp[i][j] = dp[i-1][j] + dp[i-1][j-nums[i-1]];
+                } else {
+                    // 背包的空间不足，只能选择不装物品 i
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][sum];
     }
 };
+// 参考labuladong的推文：https://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247485700&idx=1&sn=433fc5ec5e03a86064d458320332a688&chksm=9bd7f70caca07e1aad658333ac05df501796862a418d8f856b12bb6ca73a924552901ec86d9b&mpshare=1&scene=1&srcid=03136rvbNhNKKLtj6mBtp9r1&sharer_sharetime=1615651842282&sharer_shareid=de6e93ea44e1ef8f1825a07598303dc6&exportkey=AYaUg257zljr6hV1D8neCg8%3D&pass_ticket=kE5Du8ImNzKZN2ZzXSl6Qgvodjs3QU3a1aQ5mht%2Fmo5zJw3IUgEbAzSVw7nlqgRj&wx_header=0#rd
 // @lc code=end
 

@@ -36,8 +36,19 @@
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-
+        int maxF = nums[0],minF = nums[0],ans = nums[0];
+        for (int i = 1; i < nums.size(); i++){
+            int mx = maxF,mn = minF;
+            maxF = max(mx*nums[i],max(nums[i],mn*nums[i]));
+            minF = min(mn*nums[i],min(nums[i],mx*nums[i]));
+            ans = max(maxF , ans);
+        }
+        return ans;
     }
 };
+/*
+时间复杂度：程序一次循环遍历了 nums，故渐进时间复杂度为 O(n)。
+空间复杂度：优化后只使用常数个临时变量作为辅助空间，与 n 无关，故渐进空间复杂度为 O(1)。
+*/
 // @lc code=end
 

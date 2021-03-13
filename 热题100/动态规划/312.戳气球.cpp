@@ -53,8 +53,33 @@
 class Solution {
 public:
     int maxCoins(vector<int>& nums) {
-
+        int n = nums.size();
+        val.resize(n+2);
+        for(int i = 1;i<=n;i++){
+            val[i] = nums[i-1];
+        }
+        val[0] = 1;
+        val[n+1] = 1;
+        rec.resize(n+2,vector<int>(n+2,-1));
+        return solve(0,n+1);
     }
+
+    int solve(int left,int right){
+        if(left>=right-1){
+            return 0;
+        }
+        if(rec[left][right]!=-1){
+            return rec[left][right];
+        }
+        for(int i = left+1;i<right;i++){
+            int sum = solve(left,i) + val[left]*val[i]*val[right]+solve(i,right);
+            rec[left][right] = max(rec[left][right],sum);
+        }
+        return rec[left][right];
+    }
+public:
+    vector<vector<int>> rec;
+    vector<int> val;
 };
 // @lc code=end
 
