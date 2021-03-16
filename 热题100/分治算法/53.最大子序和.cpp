@@ -72,7 +72,12 @@
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
-
+        int pre = 0,maxans = nums[0];
+        for(auto x : nums){
+            pre = max(pre, pre + x);
+            maxans = max(maxans, pre);
+        }
+        return maxans;
     }
 };
 // @lc code=end
