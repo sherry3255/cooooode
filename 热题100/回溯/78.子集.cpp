@@ -49,8 +49,26 @@
 class Solution {
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
-
+        dfs(0,nums);
+        return ans;
     }
+    void dfs(int cur, vector<int>& nums){
+        if(cur == nums.size()){
+            ans.push_back(t);
+            return;
+        }
+        t.push_back(nums[cur]);
+        dfs(cur+1,nums);
+        t.pop_back();
+        dfs(cur+1,nums);
+    }
+public:
+    vector<int> t;
+    vector<vector<int>> ans;
 };
+/**
+时间复杂度：O(n*2^n)。一共 2^n 个状态，每种状态需要 O(n) 的时间来构造子集。
+空间复杂度：O(n)。临时数组 t 的空间代价是 O(n)，递归时栈空间的代价为 O(n)。
+ * /
 // @lc code=end
 

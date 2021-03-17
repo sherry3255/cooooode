@@ -31,10 +31,22 @@
  */
 
 // @lc code=start
-class Solution {
+class Solution{                                                                      
 public:
     vector<vector<int>> permute(vector<int>& nums) {
-
+        vector<vector<int>> ans;
+        backtrack(nums,nums.size(),0,ans);
+        return ans;
+    }
+    void backtrack(vector<int>& output, int len, int idx, vector<vector<int>>& ans){
+        if(idx == len){
+            ans.push_back(output);
+        }
+        for(int i = idx; i < len; i++){
+            swap(output[idx],output[i]);
+            backtrack(output, len, idx + 1, ans);
+            swap(output[idx],output[i]);
+        }
     }
 };
 // @lc code=end

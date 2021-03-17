@@ -61,7 +61,23 @@
 class Solution {
 public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-
+        vector<int> combine;
+        vector<vector<int>> ans;
+        dfs(candidates, target, 0, ans, combine);
+        return ans;
+    }
+    void dfs(vector<int>& candidates, int target, int idx, vector<vector<int>>& ans, vector<int>& combine){
+        if(idx == candidates.size()) return;
+        if(target == 0){
+            ans.push_back(combine);
+            return;
+        }
+        dfs(candidates, target, idx + 1, ans, combine);
+        if(target - candidates[idx] >= 0){
+            combine.push_back(candidates[idx]);
+            dfs(candidates, target - candidates[idx], idx, ans, combine);
+            combine.pop_back();
+        }
     }
 };
 // @lc code=end

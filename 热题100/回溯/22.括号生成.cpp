@@ -44,9 +44,31 @@
 // @lc code=start
 class Solution {
 public:
-    vector<string> generateParenthesis(int n) {
+// 使用一个变量 balance 表示左括号的数量减去右括号的数量。如果在遍历过程中 balance 的值小于零，或者结束时 balance 的值不为零，那么该序列就是无效的，否则它是有效的。
 
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        string current;
+        backtrack(current, n, 0, 0, result);
+        return result;
     }
+    void backtrack(string &current, int n, int open, int close, vector<string>& result){
+        if(current.size() == 2*n){
+            result.push_back(current);
+        }
+        if(open < n){
+            current.push_back('(');
+            backtrack(current, n, open+1, close, result);
+            current.pop_back();
+        }
+        if(close < open){
+            current.push_back(')');
+            backtrack(current, n, open, close + 1, result);
+            current.pop_back();
+        }
+    }
+    
 };
+// 时间复杂度和空间复杂度直接看链接https://leetcode-cn.com/problems/generate-parentheses/solution/gua-hao-sheng-cheng-by-leetcode-solution/
 // @lc code=end
 
