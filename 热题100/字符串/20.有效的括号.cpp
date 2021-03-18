@@ -73,8 +73,32 @@
 class Solution {
 public:
     bool isValid(string s) {
-
+        int n = s.length();
+        if(n%2 == 1) return false;
+        unordered_map<char,char> pairs = {
+            {')','('},
+            {']','['},
+            {'}','{'}
+        };
+        stack<char> stk;
+        for(auto c:s){
+            if(pairs.count(c)){
+                if(stk.empty()||stk.top()!=pairs[c]){
+                    return false;
+                }
+                stk.pop();
+            }else{
+                stk.push(c);
+            }
+        }
+        return stk.empty();
     }
 };
+/*
+时间复杂度：O(n)，其中 n 是字符串 s 的长度。
+
+空间复杂度：O(n+∣Σ∣)，其中 Σ 表示字符集，本题中字符串只包含 6 种括号，∣Σ∣=6。栈中的字符数量为 O(n)，而哈希表使用的空间为 O(∣Σ∣)，相加即可得到总空间复杂度。
+
+*/
 // @lc code=end
 

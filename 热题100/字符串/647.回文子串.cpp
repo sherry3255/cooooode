@@ -46,8 +46,18 @@
 class Solution {
 public:
     int countSubstrings(string s) {
-
+        int n = s.size(),ans = 0;
+        for(int i = 0;i < 2*n-1;i++){
+            int l = i/2,r = i/2+i%2;
+            while(l>=0 && r<n && s[l] == s[r]){
+                r++;
+                l--;
+                ans++;
+            }
+        }
+        return ans;
     }
 };
+// 时间复杂度 o(n^2),主要是指针会移动n次，每次最多遍历n位，空间复杂度o(1)
 // @lc code=end
 
