@@ -29,7 +29,7 @@ public:
         // write code here
         vector<vector<int> > res;
         if (!root) return res;
-        stack<TreeNode *> stk1, stk2; // stk1存储偶数层，stk2存储奇数层
+        stack<TreeNode *> stk1, stk2; // stk1存储偶数层,从左到右遍历，stk2存储奇数层，从右到左遍历
         stk1.push(root);
         while (!stk1.empty() || !stk2.empty()) {
             vector<int> vec;
