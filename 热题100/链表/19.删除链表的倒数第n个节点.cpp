@@ -76,8 +76,9 @@ public:
             return head->next;
         }
         while(fast!= nullptr && fast->next != nullptr){
+            
+            fast = fast->next;
             slow = slow->next;
-            fast = slow->next;
         }
         slow->next = slow->next->next;
         return head;
