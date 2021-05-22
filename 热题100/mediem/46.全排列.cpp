@@ -50,4 +50,9 @@ public:
     }
 };
 // @lc code=end
+// 时间复杂度：O(n×n!)O(n \times n!)O(n×n!)
+// 空间复杂度：O(n)O(n)O(n)，其中 nnn 为序列的长度。除答案数组以外，递归函数在递归过程中需要为每一层递归函数分配栈空间，所以这里需要额外的空间且该空间取决于递归的深度，这里可知递归调用深度为 O(n)O(n)O(n)。
+
+// https://leetcode-cn.com/problems/permutations/solution/quan-pai-lie-by-leetcode-solution-2/
+
 

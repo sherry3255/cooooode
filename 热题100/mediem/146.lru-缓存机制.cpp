@@ -14,7 +14,7 @@ struct DLinkedNode{
 };
 class LRUCache {
 public:
-// 首先使用哈希表进行定位，找出缓存项在双向链表中的位置，随后将其移动到双向链表的头部，即可在 O(1)O(1)O(1) 的时间内完成 get 或者 put 操作。
+// 首先使用哈希表进行定位，找出缓存项在双向链表中的位置，随后将其移动到双向链表的头部，即可在 O(1) 的时间内完成 get 或者 put 操作。
     LRUCache(int _capacity):capacity(_capacity),size(0) {
         // 使用伪头部和伪尾部节点
         head = new DLinkedNode();
